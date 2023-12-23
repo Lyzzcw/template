@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!-- context 是逆向工程的主要配置信息 -->
+    <!-- id：起个名字 -->
+    <!-- targetRuntime：设置生成的文件适用于那个 mybatis 版本 -->
+    <context id="default" targetRuntime="MyBatis3">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 生成的pojo，将implements Serializable -->
+<!--        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />-->
+        <!-- 为生成的pojo创建一个toString方法 -->
+<!--        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
+        <!-- 生成的pojo，增加了equals 和 hashCode方法-->
+<!--        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />-->
+        <!-- 自动生成实体类中去掉getter和setter方法，自定义方法中添加lombok注解-->
+        <plugin type="lyzzcw.work.im.server.infrastructure.generator.IngoreSetterAndGetterPlugin" />
+        <!--生成mapper.xml时覆盖原文件 建议追加不覆盖，以免丢失原sql-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+        <!-- type值为自定义的MyCommentGenerator-->
+        <commentGenerator type="lyzzcw.work.im.server.infrastructure.generator.CustomizedGenerator">
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="false"/>
+            <property name="suppressDate" value="false"/>
+            <!-- 是否添加数据表中字段的注释 true：是 ： false:否 -->
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+        <!--jdbc的数据库连接-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/im?useUnicode=true&amp;characeterEncoding=utf-8&amp;serverTimezone=UTC"
+                        userId="root"
+                        password="root">
+            <!--高版本的 mysql-connector-java 需要设置 nullCatalogMeansCurrent=true-->
+            <!--解决mysql驱动升级到8.0后不生成指定数据库代码的问题-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+        <!--非必须，类型处理器，在数据库类型和java类型之间的转换控制-->
+        <javaTypeResolver>
+            <!-- 默认情况下数据库中的 decimal，bigInt 在 Java 对应是 sql 下的 BigDecimal 类 -->
+            <!-- 不是 double 和 long 类型 -->
+            <!-- 使用常用的基本类型代替 sql 包下的引用类型 -->
+            <property name="forceBigDecimals" value="false"/>
+            <!-- 支持java8 日期-->
+            <property name="useJSR310Types" value="true"/>
+        </javaTypeResolver>
+        <!-- targetPackage：生成的实体类所在的包 -->
+        <!-- targetProject：生成的实体类所在的硬盘位置 -->
+        <javaModelGenerator targetPackage="lyzzcw.work.im.infrastructure.entity"
+                            targetProject="D:/java/workspace/lzy/lyzzcw-im/lyzzcw-im-server/lyzzcw-im-server-infrastructure/src/main/java">
+            <!-- 是否允许子包 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 是否对modal添加构造函数 -->
+            <property name="constructorBased" value="false"/>
+            <!-- 是否清理从数据库中查询出的字符串左右两边的空白字符 -->
+            <property name="trimStrings" value="true"/>
+            <!-- 建立modal对象是否不可改变 即生成的modal对象不会有setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+        <!-- targetPackage 和 targetProject：生成的 mapper 文件的包和位置 -->
+        <sqlMapGenerator targetPackage="lyzzcw.work.im.infrastructure.mapper"
+                         targetProject="D:/java/workspace/lzy/lyzzcw-im/lyzzcw-im-server/lyzzcw-im-server-infrastructure/src/main/resources">
+            <!-- 针对数据库的一个配置，是否把 schema 作为字包名 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!-- targetPackage 和 targetProject：生成的 interface 文件的包和位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="lyzzcw.work.im.infrastructure.mapper"
+                             targetProject="D:/java/workspace/lzy/lyzzcw-im/lyzzcw-im-server/lyzzcw-im-server-infrastructure/src/main/java">
+            <!-- 针对 oracle 数据库的一个配置，是否把 schema 作为字包名 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!--生成全部表tableName设为%-->
+        <!--        可选：-->
+        <!--        1，schema：数据库的schema；-->
+        <!--        2，catalog：数据库的catalog；-->
+        <!--        3，alias：为数据表设置的别名，如果设置了alias，那么生成的所有的SELECT SQL语句中，列名会变成：alias_actualColumnName-->
+        <!--        4，domainObjectName：生成的domain类的名字，如果不设置，直接使用表名作为domain类的名字；可以设置为somepck.domainName，那么会自动把domainName类再放到somepck包里面；-->
+        <!--        5，enableInsert（默认true）：指定是否生成insert语句；-->
+        <!--        6，enableSelectByPrimaryKey（默认true）：指定是否生成按照主键查询对象的语句（就是getById或get）；-->
+        <!--        7，enableSelectByExample（默认true）：MyBatis3Simple为false，指定是否生成动态查询语句；-->
+        <!--        8，enableUpdateByPrimaryKey（默认true）：指定是否生成按照主键修改对象的语句（即update)；-->
+        <!--        9，enableDeleteByPrimaryKey（默认true）：指定是否生成按照主键删除对象的语句（即delete）；-->
+        <!--        10，enableDeleteByExample（默认true）：MyBatis3Simple为false，指定是否生成动态删除语句；-->
+        <!--        11，enableCountByExample（默认true）：MyBatis3Simple为false，指定是否生成动态查询总条数语句（用于分页的总条数查询）；-->
+        <!--        12，enableUpdateByExample（默认true）：MyBatis3Simple为false，指定是否生成动态修改语句（只修改对象中不为空的属性）；-->
+        <!--        13，modelType：参考context元素的defaultModelType，相当于覆盖；-->
+        <!--        14，delimitIdentifiers：参考tableName的解释，注意，默认的delimitIdentifiers是双引号，如果类似MYSQL这样的数据库，使用的是`（反引号，那么还需要设置context的beginningDelimiter和endingDelimiter属性）-->
+        <!--        15，delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers参考context的属性-->
+
+        <!-- tableName是数据库中的表名，domainObjectName是生成的JAVA模型名，后面的参数不用改，要生成更多的表就在下面继续加table标签 -->
+        <!-- catalog datasource -->
+        <table schema="" tableName="im_friend" domainObjectName="ImFriend"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+               catalog="" >
+            <property name="useActualColumnNames" value="false"></property>
+            <property name="ignoreQualifiersAtRuntime" value="true"></property>
+            <!-- 指定列的数据类型 -->
+            <columnOverride column="created_time" javaType="java.time.LocalDateTime"/>
+        </table>
+        <table schema="" tableName="im_group" domainObjectName="ImGroup"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+               catalog="" >
+            <property name="useActualColumnNames" value="false"></property>
+            <property name="ignoreQualifiersAtRuntime" value="true"></property>
+            <!-- 指定列的数据类型 -->
+            <columnOverride column="created_time" javaType="java.time.LocalDateTime"/>
+        </table>
+        <table schema="" tableName="im_group_member" domainObjectName="ImGroupMember"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+               catalog="" >
+            <property name="useActualColumnNames" value="false"></property>
+            <property name="ignoreQualifiersAtRuntime" value="true"></property>
+            <!-- 指定列的数据类型 -->
+            <columnOverride column="created_time" javaType="java.time.LocalDateTime"/>
+        </table>
+        <table schema="" tableName="im_group_message" domainObjectName="ImGroupMessage"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+               catalog="" >
+            <property name="useActualColumnNames" value="false"></property>
+            <property name="ignoreQualifiersAtRuntime" value="true"></property>
+            <!-- 指定列的数据类型 -->
+            <columnOverride column="send_time" javaType="java.time.LocalDateTime"/>
+        </table>
+        <table schema="" tableName="im_private_message" domainObjectName="ImPrivateMessage"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+               catalog="" >
+            <property name="useActualColumnNames" value="false"></property>
+            <property name="ignoreQualifiersAtRuntime" value="true"></property>
+            <!-- 指定列的数据类型 -->
+            <columnOverride column="send_time" javaType="java.time.LocalDateTime"/>
+        </table>
+        <table schema="" tableName="im_user" domainObjectName="ImUser"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+               catalog="" >
+            <property name="useActualColumnNames" value="false"></property>
+            <property name="ignoreQualifiersAtRuntime" value="true"></property>
+            <!-- 指定列的数据类型 -->
+            <columnOverride column="created_time" javaType="java.time.LocalDateTime"/>
+            <columnOverride column="last_login_time" javaType="java.time.LocalDateTime"/>
+        </table>
+    </context>
+</generatorConfiguration>

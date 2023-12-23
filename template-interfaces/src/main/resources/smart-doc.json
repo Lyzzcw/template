@@ -1,0 +1,23 @@
+{
+  "serverUrl": "http://localhost:8080",
+  "pathPrefix": "",
+  "allInOne": true,
+  "outPath": "D://md2",
+  "style": "xt256",
+  "createDebugPage": false,
+  "packageFilters": "lyzzcw.work.component.controller.*",//controller包过滤，多个包用英文逗号隔开
+  "appToken": "22259a01b763469c8fd8e2c1437210cc", // torna平台appToken
+  "openUrl": "http://localhost:7700/api",    // torna平台地址，填写自己的私有化部署地址
+  "debugEnvName":"测试环境",                       // torna测试环境名称
+  "debugEnvUrl":"http://127.0.0.1:8080",       // 接口所在的测试服务器的url
+  "replace": true,                                // 推送torna时替换旧的文档
+  "revisionLogs": [
+    {
+      "version": "1.0",
+      "revisionTime": "2023-09-13 10:30",
+      "status": "创建",
+      "author": "lzy",
+      "remarks": "初始创建"
+    }
+  ]
+}
