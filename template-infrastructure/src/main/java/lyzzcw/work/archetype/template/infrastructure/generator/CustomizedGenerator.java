@@ -120,7 +120,9 @@ public class CustomizedGenerator implements CommentGenerator {
             }
         }
         field.addJavaDocLine(" */"); //$NON-NLS-1$
-
+        if(field.getType().getShortName().equals("Long")){
+            field.addAnnotation("@JsonSerialize(using = ToStringSerializer.class)");
+        }
     }
 
     /**
