@@ -154,6 +154,12 @@ public class CustomizedGenerator implements CommentGenerator {
             return;
         }
 
+        topLevelClass.addImportedType("com.fasterxml.jackson.databind.annotation.JsonSerialize");
+        topLevelClass.addImportedType("com.fasterxml.jackson.databind.ser.std.ToStringSerializer");
+        topLevelClass.addImportedType("lombok.AllArgsConstructor");
+        topLevelClass.addImportedType("lombok.Data");
+        topLevelClass.addImportedType("lombok.NoArgsConstructor");
+
         topLevelClass.addJavaDocLine("/**"); //$NON-NLS-1$
         String remarks = introspectedTable.getRemarks();
         if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
