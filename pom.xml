@@ -13,7 +13,7 @@
         <module>template-infrastructure</module>
         <module>template-domain</module>
         <module>template-client</module>
-    </modules>
+  </modules>
 
     <packaging>pom</packaging>
 
@@ -24,26 +24,25 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <logback.version>1.2.6</logback.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
-        <lombok.version>1.18.16</lombok.version>
+        <spring.boot.version>2.6.13</spring.boot.version>
     </properties>
 
     <dependencyManagement>
+        <dependencies>
+            <!-- ����spring boot�汾����ֹ������������Ⱦ-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
     </dependencyManagement>
 
     <dependencies>
-        <!-- common begin-->
-        <dependency>
-            <groupId>lyzzcw.work.component</groupId>
-            <artifactId>common-parents</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
+
         <!--MapStruct-jdk8 -->
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -60,13 +59,27 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
-        <!-- ???????????? org.slf4j / logback-cord?????????????????????-->
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
+            <groupId>lyzzcw.work.component</groupId>
+            <artifactId>spring-dependencies-parents</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
-        <!-- common end-->
+        <dependency>
+            <groupId>lyzzcw.work.component</groupId>
+            <artifactId>domain-parents</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>lyzzcw.work.component</groupId>
+            <artifactId>common-parents</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>lyzzcw.work.component</groupId>
+            <artifactId>redis-parents</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

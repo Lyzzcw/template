@@ -6,14 +6,13 @@ spring:
   cloud:
     nacos:
       discovery:
-        #nacos的服务地址，nacos-server中IP地址:端口号
+        enabled: false
         server-addr: 127.0.0.1:8848
         namespace: 4b0d74a4-49a1-4978-b325-7158e7973849
         group: DEFAULT_GROUP
         register-enabled: true
-        #不开启，dubbo注册
-        enabled: true
       config:
+        enabled: false
         server-addr: 127.0.0.1:8848
         #配置内容的数据格式，目前只支持 properties 和 yaml 类型，
         #这个和 dataId有关-> ${prefix(spring-application-name)}-${spring.profiles.active}.${file-extension}
@@ -32,17 +31,6 @@ spring:
           - dataId: seata-config.yml
             group: DEFAULT_GROUP
             refresh: false
-dubbo:
-  application:
-    name: ${spring.application.name}
-    qos-enable: false
-  registry:
-    address: nacos://127.0.0.1:8848
-    parameters:
-      namespace: ${spring.cloud.nacos.config.namespace}
-  protocol:
-    name: dubbo
-    port: -1
 management:
   endpoints:
     web:
